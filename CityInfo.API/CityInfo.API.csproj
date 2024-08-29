@@ -16,6 +16,9 @@
     <None Update="IMG_0123.JPG">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Проектирование_БД_ЗАДАНИЯ.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
