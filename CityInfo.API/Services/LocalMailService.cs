@@ -4,8 +4,14 @@ namespace CityInfo.API.Services
 {
     public class LocalMailService : IMailService
     {
-        private string _mailTo = "admin@mycompany.com";
-        private string _mailFrom = "noreply@mycompany.com";
+        private string _mailTo = string.Empty;
+        private string _mailFrom = string.Empty;
+
+        public LocalMailService(IConfiguration configuration)
+        {
+            _mailTo = configuration["mailSettings:mailToAdress"];
+            _mailFrom = configuration["mailSettings:mailForAdress"];
+        }
 
         public void Send(string subject, string message)
         {
