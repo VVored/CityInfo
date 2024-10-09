@@ -10,10 +10,6 @@ namespace CityInfo.API.Db
         public DbSet<PointOfInterest> PointOfInterests { get; set; }
         public CityInfoContext() { }
         public CityInfoContext(DbContextOptions<CityInfoContext> options) : base(options) { }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.EnableSensitiveDataLogging();
-        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<City>()

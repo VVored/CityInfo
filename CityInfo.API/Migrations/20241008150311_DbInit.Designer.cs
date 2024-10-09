@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CityInfo.API.Migrations
 {
     [DbContext(typeof(CityInfoContext))]
-    [Migration("20240902120241_test")]
-    partial class test
+    [Migration("20241008150311_DbInit")]
+    partial class DbInit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,6 +44,26 @@ namespace CityInfo.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Cities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "The one big with that big park.",
+                            Name = "New York City"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "The one with cathedral that was never really finished.",
+                            Name = "Antwerp"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "The one with that big tower.",
+                            Name = "Paris"
+                        });
                 });
 
             modelBuilder.Entity("CityInfo.API.Entities.PointOfInterest", b =>
@@ -67,6 +87,44 @@ namespace CityInfo.API.Migrations
                     b.HasIndex("CityId");
 
                     b.ToTable("PointOfInterests");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CityId = 1,
+                            Name = "Central Park"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CityId = 1,
+                            Name = "2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CityId = 2,
+                            Name = "3"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CityId = 2,
+                            Name = "4"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CityId = 3,
+                            Name = "5"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CityId = 3,
+                            Name = "6"
+                        });
                 });
 
             modelBuilder.Entity("CityInfo.API.Entities.PointOfInterest", b =>
