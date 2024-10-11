@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CityInfo.API.Entities;
 using CityInfo.API.Models;
 using CityInfo.API.Services;
 using Microsoft.AspNetCore.Http;
@@ -50,30 +51,29 @@ namespace CityInfo.API.Controllers
             }
             return Ok(_mapper.Map<PointOfInterestDto>(pointOfInterest));
         }
-       /* [HttpPost]
-        public ActionResult<PointOfInterestDto> CreatePointOfInterest(int cityId, [FromBody] PointsOfInterestForCreationDto pointsOfInterest)
+        [HttpPost]
+        public async Task<ActionResult<PointOfInterestDto>> CreatePointOfInterest(int cityId, [FromBody] PointsOfInterestForCreationDto pointsOfInterest)
         {
-            var city = _citiesDataStore.Cities.FirstOrDefault(c => c.Id == cityId);
-            if (city == null)
+            if (!await _cityInfoRepository.CityExistsAsync(cityId))
             {
                 return NotFound();
             }
-            var maxPointOfInterestId = _citiesDataStore.Cities.SelectMany(c => c.PointOfInterests).Max(p => p.Id);
-            var finalPointOfInterest = new PointOfInterestDto()
-            {
-                Id = ++maxPointOfInterestId,
-                Name = pointsOfInterest.Name,
-                Description = pointsOfInterest.Description
-            };
-            city.PointOfInterests.Add(finalPointOfInterest);
+            var finalPointOfInterest = _mapper.Map<PointOfInterest>(pointsOfInterest);
+
+            await _cityInfoRepository.AddPointOfInterestForCityAsync(cityId, finalPointOfInterest);
+
+            await _cityInfoRepository.SaveChangesAsync();
+
+            var createdPointOfInterestToReturn = _mapper.Map<PointOfInterestDto>(finalPointOfInterest);
+            
             return CreatedAtRoute(
                 routeName: "GetPointOfInterest",
                 routeValues: new
                 {
                     cityId,
-                    pointOfInterestId = finalPointOfInterest.Id
+                    pointOfInterestId = createdPointOfInterestToReturn.Id
                 },
-                value: finalPointOfInterest
+                value: createdPointOfInterestToReturn
             );
         }
         [HttpPut("{pointOfInterestId}")]
@@ -141,6 +141,6 @@ namespace CityInfo.API.Controllers
             city.PointOfInterests.Remove(deletePointOfInterest);
             _mailService.Send("Point of interest deleted.", $"Point of interest {deletePointOfInterest.Name} with id {deletePointOfInterest.Id} was deleted.");
             return NoContent();
-        }*/
+        }
     }
 }
