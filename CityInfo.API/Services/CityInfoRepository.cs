@@ -54,13 +54,9 @@ namespace CityInfo.API.Services
             return (await _context.SaveChangesAsync() >= 0);
         }
 
-        public async Task DeletePointOfInterestForCityAsync(int cityId, PointOfInterest pointOfInterest)
+        public void DeletePointOfInterestForCity(PointOfInterest pointOfInterest)
         {
-            var city = await GetCityAsync(cityId, true);
-            if (city != null)
-            {
-                city.PointOfInterests.Remove(pointOfInterest);
-            }
+            _context.PointOfInterests.Remove(pointOfInterest);
         }
     }
 }

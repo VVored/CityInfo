@@ -135,7 +135,7 @@ namespace CityInfo.API.Controllers
             {
                 return NotFound();
             }
-            await _cityInfoRepository.DeletePointOfInterestForCityAsync(cityId, deletePointOfInterest);
+            _cityInfoRepository.DeletePointOfInterestForCity(deletePointOfInterest);
             await _cityInfoRepository.SaveChangesAsync();
             _mailService.Send("Point of interest deleted.", $"Point of interest {deletePointOfInterest.Name} with id {deletePointOfInterest.Id} was deleted.");
             return NoContent();
