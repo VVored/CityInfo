@@ -12,6 +12,7 @@ namespace CityInfo.API.Services
         Task<PointOfInterest?> GetPointOfInterestsAsync(int cityId, int pointOfInterestId);
         Task AddPointOfInterestForCityAsync(int cityId, PointOfInterest pointOfInterest);
         Task<bool> SaveChangesAsync();
+        Task<bool> CityNameMatchesCityId(string? cityName, int cityId);
         void DeletePointOfInterestForCity(PointOfInterest pointOfInterest);
     }
 }
